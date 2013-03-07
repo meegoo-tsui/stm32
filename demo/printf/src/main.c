@@ -20,8 +20,6 @@
 /* Private variables ---------------------------------------------------------*/
 /* Private function prototypes -----------------------------------------------*/
 /* Private functions ---------------------------------------------------------*/
-
-/******************************************************************************/
 /**
   * @brief  Main program
   * @param  None
@@ -37,9 +35,7 @@ int main(void)
 	printf("\n\rUSART Printf Example: retarget the C library printf function to the USART\n\r");
 	printf(COLOR_RESET);
 	STM32_TRACE(0, "STM32 TRACE 0\r\n");	
-	STM32_TRACE(1, "STM32 TRACE 1\r\n");	
-	STM32_TRACE(2, "STM32 TRACE 2\r\n");
-	STM32_TRACE(3, "STM32 TRACE 3\r\n");
+	STM32_TRACE(1, "STM32 TRACE 1\r\n");
 	CURSOR_MV_UP(0, 1);
 	CURSOR_CLR_LINE(0);
 	printf("Please input:\r\n");

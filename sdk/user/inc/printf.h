@@ -54,36 +54,24 @@
  */
 #ifdef PRINTF_LEVEL
 	#if   (PRINTF_LEVEL == 0)
-		#define printf0 printf
+		#define printf0(fmt, args...)
 		#define printf1(fmt, args...)
-		#define printf2(fmt, args...)
-		#define printf3(fmt, args...)
 	#elif (PRINTF_LEVEL == 1)
 		#define printf0 printf
-		#define printf1 printf
-		#define printf2(fmt, args...)
-		#define printf3(fmt, args...)
-	#elif (PRINTF_LEVEL == 2)
+		#define printf1(fmt, args...)
+	#elif (PRINTF_LEVEL >= 2)
 		#define printf0 printf
 		#define printf1 printf
-		#define printf2 printf
-		#define printf3(fmt, args...)
 	#elif (PRINTF_LEVEL >= 3)
 		#define printf0 printf
 		#define printf1 printf
-		#define printf2 printf
-		#define printf3 printf
 	#else
 		#define printf0(fmt, args...)
 		#define printf1(fmt, args...)
-		#define printf2(fmt, args...)
-		#define printf3(fmt, args...)
 	#endif
 #else
 	#define printf0(fmt, args...)
 	#define printf1(fmt, args...)
-	#define printf2(fmt, args...)
-	#define printf3(fmt, args...)
 #endif
 
 /*
