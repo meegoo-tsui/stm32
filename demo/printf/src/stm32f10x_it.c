@@ -28,13 +28,10 @@
 /* Private define ------------------------------------------------------------*/
 /* Private macro -------------------------------------------------------------*/
 /* Private variables ---------------------------------------------------------*/
+volatile uint32_t dma1_channel1_status;
+
 /* Private function prototypes -----------------------------------------------*/
 /* Private functions ---------------------------------------------------------*/
-
-/******************************************************************************/
-/*            Cortex-M3 Processor Exceptions Handlers                         */
-/******************************************************************************/
-
 /**
   * @brief  This function handles NMI exception.
   * @param  None
@@ -126,6 +123,16 @@ void PendSV_Handler(void)
   */
 void SysTick_Handler(void)
 {
+}
+
+void DMA1_Channel1_IRQHandler(void)
+{
+	/* Test on DMA1 Channel1 Transfer Complete interrupt */
+	if(DMA_GetITStatus(DMA1_IT_TC1)){
+		/* Clear DMA1 Channel1 Half Transfer, Transfer Complete and Global interrupt pending bits */
+		DMA_ClearITPendingBit(DMA1_IT_GL1);
+		dma1_channel1_status = 1;
+	}
 }
 
 /******************* (C) COPYRIGHT 2011 STMicroelectronics *****END OF FILE****/
