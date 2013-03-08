@@ -9,6 +9,8 @@
   */ 
 
 /* Includes ------------------------------------------------------------------*/
+#include <stdio.h>
+
 #include "hw_config.h"
 #include "stm32f10x_it.h"
 
@@ -65,6 +67,13 @@ void hardware_config(void)
 	USART_Cmd(USART1, ENABLE);
 	/* Clear flag for 1st byte */
 	USART_GetFlagStatus(USART1, USART_FLAG_TC);
+
+	/* Setup SysTick Timer for 1 sec interrupts */
+	SysTick_1ms = 0;
+	if(SysTick_Config(SystemCoreClock / 1000)){ 
+		printf("\r\nCapture error.");
+		while (1);
+	}
 }
 
 /******************************************************************************/

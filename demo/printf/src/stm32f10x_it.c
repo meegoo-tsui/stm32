@@ -28,6 +28,7 @@
 /* Private define ------------------------------------------------------------*/
 /* Private macro -------------------------------------------------------------*/
 /* Private variables ---------------------------------------------------------*/
+volatile uint32_t SysTick_1ms;
 volatile uint32_t dma1_channel1_status;
 
 /* Private function prototypes -----------------------------------------------*/
@@ -41,6 +42,7 @@ void NMI_Handler(void)
 {
 }
 
+/******************************************************************************/
 /**
   * @brief  This function handles Hard Fault exception.
   * @param  None
@@ -53,6 +55,7 @@ void HardFault_Handler(void)
 	}
 }
 
+/******************************************************************************/
 /**
   * @brief  This function handles Memory Manage exception.
   * @param  None
@@ -65,6 +68,7 @@ void MemManage_Handler(void)
 	}
 }
 
+/******************************************************************************/
 /**
   * @brief  This function handles Bus Fault exception.
   * @param  None
@@ -77,6 +81,7 @@ void BusFault_Handler(void)
 	}
 }
 
+/******************************************************************************/
 /**
   * @brief  This function handles Usage Fault exception.
   * @param  None
@@ -89,6 +94,7 @@ void UsageFault_Handler(void)
 	}
 }
 
+/******************************************************************************/
 /**
   * @brief  This function handles SVCall exception.
   * @param  None
@@ -98,6 +104,7 @@ void SVC_Handler(void)
 {
 }
 
+/******************************************************************************/
 /**
   * @brief  This function handles Debug Monitor exception.
   * @param  None
@@ -107,6 +114,7 @@ void DebugMon_Handler(void)
 {
 }
 
+/******************************************************************************/
 /**
   * @brief  This function handles PendSV_Handler exception.
   * @param  None
@@ -116,6 +124,7 @@ void PendSV_Handler(void)
 {
 }
 
+/******************************************************************************/
 /**
   * @brief  This function handles SysTick Handler.
   * @param  None
@@ -123,13 +132,21 @@ void PendSV_Handler(void)
   */
 void SysTick_Handler(void)
 {
+	SysTick_1ms++;
 }
 
+/******************************************************************************/
+/**
+  * @brief  This function handles DMA1 channel1 Handler.
+  * @param  None
+  * @retval None
+  */
 void DMA1_Channel1_IRQHandler(void)
 {
 	/* Test on DMA1 Channel1 Transfer Complete interrupt */
 	if(DMA_GetITStatus(DMA1_IT_TC1)){
-		/* Clear DMA1 Channel1 Half Transfer, Transfer Complete and Global interrupt pending bits */
+		/* Clear DMA1 Channel1 Half Transfer, 
+		   Transfer Complete and Global interrupt pending bits */
 		DMA_ClearITPendingBit(DMA1_IT_GL1);
 		dma1_channel1_status = 1;
 	}

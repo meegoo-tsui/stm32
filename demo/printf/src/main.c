@@ -9,11 +9,12 @@
   */ 
 
 /* Includes ------------------------------------------------------------------*/
+#include <stdio.h>
+
 #include "stm32f10x.h"
 #include "printf.h"
 #include "hw_config.h"
 #include "stm32f10x_it.h"
-#include <stdio.h>
 
 /* Private typedef -----------------------------------------------------------*/
 /* Private define ------------------------------------------------------------*/
@@ -21,20 +22,18 @@
 
 /* Private macro -------------------------------------------------------------*/
 /* Private variables ---------------------------------------------------------*/
-/* ·ÅÔÚmain£¬¶ÑÕ»Òç³ö */
 uint32_t source[ARRAYSIZE];
 uint32_t destination[ARRAYSIZE];
 
 /* Private function prototypes -----------------------------------------------*/
 /* Private functions ---------------------------------------------------------*/
 /**
-  * @brief  Main program
+  * @brief  dma men to men test
   * @param  None
   * @retval None
   */
-int main(void)
+void dma_mem_to_mem_test(void)
 {
-	/* initialize source and destination arrays */
 	uint32_t i;
 
 	/* initialize array */
@@ -43,15 +42,9 @@ int main(void)
 		destination[i] = 0;
 	}
 
-	/* Init hardware */
-	hardware_config();
-
-	/* Init DMA */
-	dma_config(source, destination, ARRAYSIZE);
-	
-	/* wait dma done */
-	DMA_Cmd(DMA1_Channel1, ENABLE);
-	while(dma1_channel1_status == 0){
+	dma_config(source, destination, ARRAYSIZE);                   /* Init DMA */
+	DMA_Cmd(DMA1_Channel1, ENABLE);     
+	while(dma1_channel1_status == 0){                        /* wait dma done */
 	}
 	for(i=0; i<ARRAYSIZE; i++){
 		if(i%8 == 0){
@@ -59,7 +52,16 @@ int main(void)
 		}
 		printf("%08x ", destination[i]);
 	}
+}
 
+/* Private functions ---------------------------------------------------------*/
+/**
+  * @brief  printf test
+  * @param  None
+  * @retval None
+  */
+void printf_test(void)
+{
 	/* Print project info */
 	printf(COLOR_RED);
 	printf("\n\rUSART Printf Example: retarget the C library printf function to the USART\n\r");
@@ -68,6 +70,22 @@ int main(void)
 	STM32_TRACE(1, "STM32 TRACE 1\r\n");
 	CURSOR_MV_UP(0, 1);
 	CURSOR_CLR_LINE(0);
+}
+
+/******************************************************************************/
+/**
+  * @brief  Main program
+  * @param  None
+  * @retval None
+  */
+int main(void)
+{
+	
+	hardware_config();                                       /* Init hardware */
+
+	dma_mem_to_mem_test();
+	printf_test();
+
 	printf("Please input:\r\n");
 	while (1){
 		fputc(fgetc(stdin), stdout);

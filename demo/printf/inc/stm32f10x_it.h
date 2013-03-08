@@ -19,19 +19,20 @@
 /* Exported constants --------------------------------------------------------*/
 /* Exported macro ------------------------------------------------------------*/
 /* Exported variables --------------------------------------------------------*/
+extern volatile uint32_t SysTick_1ms;
 extern volatile uint32_t dma1_channel1_status;
 
 /* Exported functions ------------------------------------------------------- */
-void NMI_Handler(void);
-void HardFault_Handler(void);
-void MemManage_Handler(void);
-void BusFault_Handler(void);
-void UsageFault_Handler(void);
-void SVC_Handler(void);
-void DebugMon_Handler(void);
-void PendSV_Handler(void);
-void SysTick_Handler(void);
-void DMA1_Channel1_IRQHandler(void);
+extern void NMI_Handler(void);
+extern void HardFault_Handler(void);
+extern void MemManage_Handler(void);
+extern void BusFault_Handler(void);
+extern void UsageFault_Handler(void);
+extern void SVC_Handler(void);
+extern void DebugMon_Handler(void);
+extern void PendSV_Handler(void);
+extern void SysTick_Handler(void);
+extern void DMA1_Channel1_IRQHandler(void);
 
 #endif /* __STM32F10x_IT_H */
 
