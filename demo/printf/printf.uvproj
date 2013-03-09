@@ -348,7 +348,7 @@
               <MiscControls></MiscControls>
               <Define>USE_STDPERIPH_DRIVER, USE_FULL_ASSERT, STM32F10X_MD, PRINTF_LEVEL=2</Define>
               <Undefine></Undefine>
-              <IncludePath>..\..\sdk\CMSIS_V3.5.0\CoreSupport;..\..\sdk\CMSIS_V3.5.0\DeviceSupport\STM32F10x;..\..\sdk\STM32F10x_StdPeriph_Lib_V3.5.0\inc;..\..\sdk\STM32F10x_App_Lib_V1.0.0\inc;.\inc</IncludePath>
+              <IncludePath>..\..\sdk\CMSIS_V3.5.0\CoreSupport;..\..\sdk\CMSIS_V3.5.0\DeviceSupport\STM32F10x;..\..\sdk\STM32F10x_StdPeriph_Lib_V3.5.0\inc;..\..\sdk\STM32_I2C_CPAL_V1.1.0\inc;..\..\sdk\STM32_I2C_CPAL_V1.1.0\devices\stm32f10x;..\..\sdk\STM32F10x_App_Lib_V1.0.0\inc;.\inc</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -862,45 +862,6 @@
               <FileName>stm32f10x_i2c.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\sdk\STM32F10x_StdPeriph_Lib_V3.5.0\src\stm32f10x_i2c.c</FilePath>
-              <FileOption>
-                <CommonProperty>
-                  <UseCPPCompiler>2</UseCPPCompiler>
-                  <RVCTCodeConst>0</RVCTCodeConst>
-                  <RVCTZI>0</RVCTZI>
-                  <RVCTOtherData>0</RVCTOtherData>
-                  <ModuleSelection>0</ModuleSelection>
-                  <IncludeInBuild>0</IncludeInBuild>
-                  <AlwaysBuild>2</AlwaysBuild>
-                  <GenerateAssemblyFile>2</GenerateAssemblyFile>
-                  <AssembleAssemblyFile>2</AssembleAssemblyFile>
-                  <PublicsOnly>2</PublicsOnly>
-                  <StopOnExitCode>11</StopOnExitCode>
-                  <CustomArgument></CustomArgument>
-                  <IncludeLibraryModules></IncludeLibraryModules>
-                </CommonProperty>
-                <FileArmAds>
-                  <Cads>
-                    <interw>2</interw>
-                    <Optim>0</Optim>
-                    <oTime>2</oTime>
-                    <SplitLS>2</SplitLS>
-                    <OneElfS>2</OneElfS>
-                    <Strict>2</Strict>
-                    <EnumInt>2</EnumInt>
-                    <PlainCh>2</PlainCh>
-                    <Ropi>2</Ropi>
-                    <Rwpi>2</Rwpi>
-                    <wLevel>0</wLevel>
-                    <uThumb>2</uThumb>
-                    <VariousControls>
-                      <MiscControls></MiscControls>
-                      <Define></Define>
-                      <Undefine></Undefine>
-                      <IncludePath></IncludePath>
-                    </VariousControls>
-                  </Cads>
-                </FileArmAds>
-              </FileOption>
             </File>
             <File>
               <FileName>stm32f10x_iwdg.c</FileName>
@@ -1228,6 +1189,26 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>STM32_I2C_CPAL_V1.1.0</GroupName>
+          <Files>
+            <File>
+              <FileName>cpal_i2c_hal_stm32f10x.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\sdk\STM32_I2C_CPAL_V1.1.0\devices\stm32f10x\cpal_i2c_hal_stm32f10x.c</FilePath>
+            </File>
+            <File>
+              <FileName>cpal_hal.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\sdk\STM32_I2C_CPAL_V1.1.0\src\cpal_hal.c</FilePath>
+            </File>
+            <File>
+              <FileName>cpal_i2c.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\sdk\STM32_I2C_CPAL_V1.1.0\src\cpal_i2c.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>STM32F10x_App_Lib_V1.0.0</GroupName>
           <Files>
             <File>
@@ -1254,6 +1235,11 @@
               <FileName>hw_config.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\src\hw_config.c</FilePath>
+            </File>
+            <File>
+              <FileName>cpal_usercallback.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\src\cpal_usercallback.c</FilePath>
             </File>
           </Files>
         </Group>
