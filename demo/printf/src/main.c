@@ -15,15 +15,37 @@
 #include "printf.h"
 #include "hw_config.h"
 #include "stm32f10x_it.h"
+#include "stm32_i2c_ee_cpal.h"
 
 /* Private typedef -----------------------------------------------------------*/
 /* Private define ------------------------------------------------------------*/
 #define ARRAYSIZE                                800
 
+/* Define EEPROM address, size and page size */
+#define EEPROM_ADDRESS                           0xA0
+#define EEPROM_PAGE_SIZE                         8
+#define sEE_DevStructure                         sEE1_DevStructure 
+
+#define BUFFER1_SIZE                             (countof(Tx1Buffer)-1)
+#define BUFFER2_SIZE                             (countof(Tx2Buffer)-1)
+
+#define EEPROM_READ_ADDR1                        ((uint16_t)0x0010)
+#define EEPROM_WRITE_ADDR1                       ((uint16_t)0x0010)
+#define EEPROM_READ_ADDR2                        ((uint16_t)0x00FF)
+#define EEPROM_WRITE_ADDR2                       ((uint16_t)0x00FF)
+
 /* Private macro -------------------------------------------------------------*/
+#define countof(a)                               (sizeof(a) / sizeof(*(a)))
+
 /* Private variables ---------------------------------------------------------*/
 uint32_t source[ARRAYSIZE];
 uint32_t destination[ARRAYSIZE];
+
+const uint8_t Tx1Buffer[] = "A123456789";
+const uint8_t Tx2Buffer[] = "B987654321";
+
+uint8_t Rx1Buffer[BUFFER1_SIZE] = {0};
+uint8_t Rx2Buffer[BUFFER2_SIZE] = {0};
 
 /* Private function prototypes -----------------------------------------------*/
 /* Private functions ---------------------------------------------------------*/
@@ -54,7 +76,7 @@ void dma_mem_to_mem_test(void)
 	}
 }
 
-/* Private functions ---------------------------------------------------------*/
+/******************************************************************************/
 /**
   * @brief  printf test
   * @param  None
@@ -77,6 +99,47 @@ void printf_test(void)
 
 /******************************************************************************/
 /**
+  * @brief  i2c eeprom cpal test
+  * @param  None
+  * @retval None
+  */
+void i2c_ee_cpal_test(void)
+{
+	/*------------- Initialize sEE_DevStructure -------------*/
+	sEE_DevStructure.sEEAddress = EEPROM_ADDRESS;
+	sEE_DevStructure.sEEPageSize = EEPROM_PAGE_SIZE;
+	sEE_DevStructure.sEEMemoryAddrMode = sEE_OPT_16BIT_REG;
+
+	/*-------------- Initialize sEE peripheral -------------*/
+	sEE_StructInit(&sEE_DevStructure);
+	sEE_Init(&sEE_DevStructure);
+
+	/* Write Data in EEPROM */
+	sEE_WriteBuffer(&sEE_DevStructure, (uint8_t*)Tx1Buffer, EEPROM_WRITE_ADDR1, BUFFER1_SIZE);
+
+	/* Wail until communication is complete */
+	printf("\n");
+	while((sEE_GetEepromState(&sEE_DevStructure) != sEE_STATE_IDLE) && 
+	  	(sEE_GetEepromState(&sEE_DevStructure) != sEE_STATE_ERROR))
+	{ 
+		printf("\rWait write done ...");
+	}  
+
+	/* Read Data from EEPROM */
+	sEE_ReadBuffer(&sEE_DevStructure, Rx1Buffer, EEPROM_READ_ADDR1, BUFFER1_SIZE);
+
+	/* Wail until communication is complete */
+	printf("\n");
+	while((sEE_GetEepromState(&sEE_DevStructure) != sEE_STATE_IDLE) && 
+	  (sEE_GetEepromState(&sEE_DevStructure) != sEE_STATE_ERROR))
+	{
+		printf("\rWait read done ...");
+	}
+	printf("\r\nRx1Buffer: %s\r\n", Rx1Buffer);
+}
+
+/******************************************************************************/
+/**
   * @brief  Main program
   * @param  None
   * @retval None
@@ -86,8 +149,10 @@ int main(void)
 	
 	hardware_config();                                       /* Init hardware */
 
-	dma_mem_to_mem_test();
-	printf_test();
+	/* Function test */
+	// dma_mem_to_mem_test();
+	// printf_test();
+	i2c_ee_cpal_test();
 
 	printf("Please input:\r\n");
 	while (1){

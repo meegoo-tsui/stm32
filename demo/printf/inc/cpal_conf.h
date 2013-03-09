@@ -314,8 +314,8 @@
                  At least one I2C device should be selected. */
         
 #define CPAL_USE_I2C1          /*<! Uncomment to use I2C1 device */
-#define CPAL_USE_I2C2          /*<! Uncomment to use I2C2 device */
-#define CPAL_USE_I2C3          /*<! Uncomment to use I2C3 device */
+//#define CPAL_USE_I2C2          /*<! Uncomment to use I2C2 device */
+//#define CPAL_USE_I2C3          /*<! Uncomment to use I2C3 device */
 
 /*-----------------------------------------------------------------------------------------------------------------------*/
 /*-----------------------------------------------------------------------------------------------------------------------*/
@@ -330,7 +330,7 @@
 
 
 /* Enable the use of Slave Mode */
-#define CPAL_I2C_SLAVE_MODE
+//#define CPAL_I2C_SLAVE_MODE
 
 
 /* Enable the use of DMA Programming Model */
@@ -343,11 +343,11 @@
 
 
 /* Enable the use of IT Programming Model */
-#define CPAL_I2C_IT_PROGMODEL
+//#define CPAL_I2C_IT_PROGMODEL
 
 
 /* Enable the use of 10Bit Addressing Mode */
-#define CPAL_I2C_10BIT_ADDR_MODE
+// #define CPAL_I2C_10BIT_ADDR_MODE
 
 
 /* Enable the use of 16Bit Address memory register option 
@@ -387,12 +387,12 @@
    WARNING: These two defines are EXCLUSIVE, only one define should be uncommented ! 
  */
 #define USE_SINGLE_ERROR_CALLBACK   /*<! select single UserCallbacks type */  
-#define USE_MULTIPLE_ERROR_CALLBACK /*<! select multiple UserCallbacks type */
+//#define USE_MULTIPLE_ERROR_CALLBACK /*<! select multiple UserCallbacks type */
 
 /* Error UserCallbacks : To use an Error UserCallback comment the relative define */
 
 /* Single Error Callback */
-#define CPAL_I2C_ERR_UserCallback       (void)
+//#define CPAL_I2C_ERR_UserCallback       (void)
 
 /* Multiple Error Callback */
 #define CPAL_I2C_BERR_UserCallback      (void)
@@ -403,8 +403,8 @@
 /* Transfer UserCallbacks : To use a Transfer callback comment the relative define */
 #define CPAL_I2C_TX_UserCallback        (void)    
 #define CPAL_I2C_RX_UserCallback        (void)
-#define CPAL_I2C_TXTC_UserCallback      (void)    
-#define CPAL_I2C_RXTC_UserCallback      (void)
+//#define CPAL_I2C_TXTC_UserCallback      (void)    
+//#define CPAL_I2C_RXTC_UserCallback      (void)
 
 /* DMA Transfer UserCallbacks : To use a DMA Transfer UserCallbacks comment the relative define */
 #define CPAL_I2C_DMATXTC_UserCallback   (void)  

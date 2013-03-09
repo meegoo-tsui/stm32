@@ -346,7 +346,7 @@
             <uThumb>0</uThumb>
             <VariousControls>
               <MiscControls></MiscControls>
-              <Define>USE_STDPERIPH_DRIVER, USE_FULL_ASSERT, STM32F10X_MD, PRINTF_LEVEL=2</Define>
+              <Define>USE_STDPERIPH_DRIVER, USE_FULL_ASSERT, STM32F10X_MD, PRINTF_LEVEL=2, CPAL_DEBUG</Define>
               <Undefine></Undefine>
               <IncludePath>..\..\sdk\CMSIS_V3.5.0\CoreSupport;..\..\sdk\CMSIS_V3.5.0\DeviceSupport\STM32F10x;..\..\sdk\STM32F10x_StdPeriph_Lib_V3.5.0\inc;..\..\sdk\STM32_I2C_CPAL_V1.1.0\inc;..\..\sdk\STM32_I2C_CPAL_V1.1.0\devices\stm32f10x;..\..\sdk\STM32F10x_App_Lib_V1.0.0\inc;.\inc</IncludePath>
             </VariousControls>
@@ -1240,6 +1240,11 @@
               <FileName>cpal_usercallback.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\src\cpal_usercallback.c</FilePath>
+            </File>
+            <File>
+              <FileName>stm32_i2c_ee_cpal.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\src\stm32_i2c_ee_cpal.c</FilePath>
             </File>
           </Files>
         </Group>

@@ -23,6 +23,7 @@
 
 /* Includes ------------------------------------------------------------------*/
 #include "stm32f10x_it.h"
+#include "cpal_conf.h"
 
 /* Private typedef -----------------------------------------------------------*/
 /* Private define ------------------------------------------------------------*/
@@ -32,6 +33,8 @@ volatile uint32_t SysTick_1ms;
 volatile uint32_t dma1_channel1_status;
 
 /* Private function prototypes -----------------------------------------------*/
+extern void CPAL_I2C_TIMEOUT_Manager(void);
+
 /* Private functions ---------------------------------------------------------*/
 /**
   * @brief  This function handles NMI exception.
@@ -133,6 +136,7 @@ void PendSV_Handler(void)
 void SysTick_Handler(void)
 {
 	SysTick_1ms++;
+	CPAL_I2C_TIMEOUT_Manager();
 }
 
 /******************************************************************************/
