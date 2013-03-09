@@ -68,6 +68,9 @@ void printf_test(void)
 	printf(COLOR_RESET);
 	STM32_TRACE(0, "STM32 TRACE 0\r\n");	
 	STM32_TRACE(1, "STM32 TRACE 1\r\n");
+	SysTick_delay_nMS(3000);
+	CURSOR_MV_UP(0, 1);
+	CURSOR_CLR_LINE(0);
 	CURSOR_MV_UP(0, 1);
 	CURSOR_CLR_LINE(0);
 }

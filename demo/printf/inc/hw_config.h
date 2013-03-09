@@ -27,6 +27,7 @@ extern NVIC_InitTypeDef  NVIC_InitStructure;
 /* Exported functions ------------------------------------------------------- */
 extern void hardware_config(void);
 extern void dma_config(uint32_t *source, uint32_t *destination, uint32_t size);
+extern void SysTick_delay_nMS(uint32_t n);
 
 #endif /* __APP_HW_CONFIG_H */
 

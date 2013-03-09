@@ -62,9 +62,6 @@
 	#elif (PRINTF_LEVEL >= 2)
 		#define printf0 printf
 		#define printf1 printf
-	#elif (PRINTF_LEVEL >= 3)
-		#define printf0 printf
-		#define printf1 printf
 	#else
 		#define printf0(fmt, args...)
 		#define printf1(fmt, args...)

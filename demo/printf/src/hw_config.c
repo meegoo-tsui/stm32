@@ -121,4 +121,19 @@ void dma_config(uint32_t *source, uint32_t *destination, uint32_t size)
 	dma1_channel1_status = 0;
 }
 
+/******************************************************************************/
+/**
+  * @brief  Delay n ms use system tick.
+  * @param  None
+  * @retval None
+  */
+void SysTick_delay_nMS(uint32_t n)
+{
+	uint32_t timeout;
+
+	timeout = n + SysTick_1ms;
+	while(SysTick_1ms != timeout){
+	}
+}
+
 /******************* (C) COPYRIGHT 2011 STMicroelectronics *****END OF FILE****/
