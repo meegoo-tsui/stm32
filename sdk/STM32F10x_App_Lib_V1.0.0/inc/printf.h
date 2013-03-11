@@ -17,6 +17,15 @@
 #include <stdio.h>
 
 /* Exported types ------------------------------------------------------------*/
+/* Exported constants --------------------------------------------------------*/
+#ifndef PRINTF_VIA_INT
+	#define PRINTF_VIA_INT                       1
+#endif
+#if (PRINTF_VIA_INT != 0)
+	#define GETCHAR_BUF_SIZE                     256
+	#define PUTCHAR_BUF_SIZE                     256
+#endif
+
 /*
  * ÉèÖÃ×ÖÌåÉ«
  * 30: ºÚ
@@ -37,7 +46,6 @@
 #define COLOR_CYAN                               "\033[1;36m"
 #define COLOR_WHITE                              "\033[1;37m"
 
-/* Exported constants --------------------------------------------------------*/
 /* Exported macro ------------------------------------------------------------*/
 #define STM32_TRACE(level, fmt, args...) \
 	printf##level(COLOR_GREEN "%d[%s:%d] %s():" COLOR_RESET fmt, level, __FILE__, __LINE__, __func__, ##args)
@@ -81,7 +89,32 @@
 #define CURSOR_CLR_LINE(level)                   printf##level("\r\033[K")
 #define CURSOR_CLR_ALL(level)                    printf##level("\033[2J")
 
+#if (PRINTF_VIA_INT != 0)
+	#define is_putchar_status()                  (in_putchar != out_putchar)
+	#define is_getchar_status()                  (in_getchar != out_getchar)
+#else
+	#define is_putchar_status() 				 (1 == 1)
+	#define is_getchar_status() 				 (1 == 1)
+#endif
+
+/* Exported variables --------------------------------------------------------*/
+#if (PRINTF_VIA_INT != 0)
+	extern uint8_t  getchar_buf[GETCHAR_BUF_SIZE];
+	extern volatile uint16_t in_getchar, out_getchar;
+	extern volatile uint32_t error_getchar;
+	extern uint8_t  putchar_buf[PUTCHAR_BUF_SIZE];
+	extern volatile uint16_t in_putchar, out_putchar;
+	extern volatile uint32_t error_putchar;
+#endif
+
 /* Exported functions ------------------------------------------------------- */
+extern void printf_init(void);
+#if (PRINTF_VIA_INT != 0)
+	extern void USART1_IRQHandler(void);
+	extern void printf_stu(void);
+#else
+	#define printf_stu()
+#endif
 
 #endif /* __STM32F10x_SDK_PRINTF_H */
 

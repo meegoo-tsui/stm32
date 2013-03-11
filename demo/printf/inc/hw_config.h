@@ -19,11 +19,6 @@
 /* Exported constants --------------------------------------------------------*/
 /* Exported macro ------------------------------------------------------------*/
 /* Exported variables --------------------------------------------------------*/
-extern USART_InitTypeDef USART_InitStructure;
-extern GPIO_InitTypeDef  GPIO_InitStructure;
-extern DMA_InitTypeDef   DMA_InitStructure;
-extern NVIC_InitTypeDef  NVIC_InitStructure;
-
 /* Exported functions ------------------------------------------------------- */
 extern void hardware_config(void);
 extern void dma_config(uint32_t *source, uint32_t *destination, uint32_t size);

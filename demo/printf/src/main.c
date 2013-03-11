@@ -95,6 +95,15 @@ void printf_test(void)
 	CURSOR_CLR_LINE(0);
 	CURSOR_MV_UP(0, 1);
 	CURSOR_CLR_LINE(0);
+
+	/* loop */
+	printf("Please input:\r\n");
+	while (1){
+		if(is_getchar_status()){
+			printf("%c\r\n", fgetc(stdin));
+		}
+		printf_stu();
+	}
 }
 
 /******************************************************************************/
@@ -146,17 +155,13 @@ void i2c_ee_cpal_test(void)
   */
 int main(void)
 {
-	
 	hardware_config();                                       /* Init hardware */
+	printf_init();                                             /* Init printf */
 
-	/* Function test */
-	// dma_mem_to_mem_test();
-	// printf_test();
-	i2c_ee_cpal_test();
+	printf_test();
 
-	printf("Please input:\r\n");
-	while (1){
-		fputc(fgetc(stdin), stdout);
+	printf(COLOR_GREEN"\r\nall done.\r\n"COLOR_RESET);
+	while(1){
 	}
 }
 
