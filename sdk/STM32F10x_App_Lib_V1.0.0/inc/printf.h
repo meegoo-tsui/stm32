@@ -22,8 +22,8 @@
 	#define PRINTF_VIA_INT                       1
 #endif
 #if (PRINTF_VIA_INT != 0)
-	#define GETCHAR_BUF_SIZE                     512
-	#define PUTCHAR_BUF_SIZE                     512
+	#define PUTCHAR_BUF_SIZE                     1024
+	#define GETCHAR_BUF_SIZE					 1024
 #endif
 
 /*
@@ -90,8 +90,10 @@
 #define CURSOR_CLR_ALL(level)                    printf##level("\033[2J")
 
 #if (PRINTF_VIA_INT != 0)
+	#define is_putchar_busy()                    ((in_putchar + 1)%PUTCHAR_BUF_SIZE == out_putchar)
 	#define is_putchar_status()                  (in_putchar != out_putchar)
 	#define is_getchar_status()                  (in_getchar != out_getchar)
+	#define is_getchar_busy()					 ((in_getchar + 1)%GETCHAR_BUF_SIZE == out_getchar)
 #else
 	#define is_putchar_status() 				 (1 == 1)
 	#define is_getchar_status() 				 (1 == 1)
@@ -99,12 +101,16 @@
 
 /* Exported variables --------------------------------------------------------*/
 #if (PRINTF_VIA_INT != 0)
-	extern uint8_t  getchar_buf[GETCHAR_BUF_SIZE];
-	extern volatile uint16_t in_getchar, out_getchar;
-	extern volatile uint32_t error_getchar;
 	extern uint8_t  putchar_buf[PUTCHAR_BUF_SIZE];
 	extern volatile uint16_t in_putchar, out_putchar;
-	extern volatile uint32_t error_putchar;
+	extern volatile uint16_t error_putchar;
+	extern volatile FunctionalState putchar_enable;
+	extern volatile uint32_t putchar_cnt;
+	extern uint8_t  getchar_buf[GETCHAR_BUF_SIZE];
+	extern volatile uint16_t in_getchar, out_getchar;
+	extern volatile uint16_t error_getchar;
+	extern volatile FunctionalState getchar_enable;
+	extern volatile uint32_t getchar_cnt;
 #endif
 
 /* Exported functions ------------------------------------------------------- */

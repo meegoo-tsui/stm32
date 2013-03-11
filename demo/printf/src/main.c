@@ -41,8 +41,8 @@
 uint32_t source[ARRAYSIZE];
 uint32_t destination[ARRAYSIZE];
 
-const uint8_t Tx1Buffer[] = "A123456789";
-const uint8_t Tx2Buffer[] = "B987654321";
+const uint8_t Tx1Buffer[] = "ABCDEFG";
+const uint8_t Tx2Buffer[] = "0123456";
 
 uint8_t Rx1Buffer[BUFFER1_SIZE] = {0};
 uint8_t Rx2Buffer[BUFFER2_SIZE] = {0};
@@ -58,10 +58,10 @@ void dma_mem_to_mem_test(void)
 {
 	uint32_t i;
 
+	/* Print test info */
+	printf(COLOR_RED "\r\nDMA Example: men to men" COLOR_RESET);
+
 	/* initialize array */
-	printf(COLOR_RED);
-	printf("DMA Example: men to men");
-	printf(COLOR_RESET);
 	for(i=0; i<ARRAYSIZE; i++){
 		source[i]      = i;
 		destination[i] = 0;
@@ -74,7 +74,6 @@ void dma_mem_to_mem_test(void)
 	for(i=0; i<ARRAYSIZE; i++){
 		if(i%8 == 0){
 			printf("\r\n");
-			SysTick_delay_nMS(50);                          /* delay for send */
 		}
 		printf("%08x ", destination[i]);
 	}
@@ -90,9 +89,9 @@ void printf_test(void)
 {
 	int get_char;
 
-	/* Print project info */
+	/* Print test info */
 	printf(COLOR_RED);
-	printf("\n\rUSART Printf Example: retarget the C library printf function to the USART\n\r");
+	printf("\r\nUSART Printf Example: retarget the C library printf function to the USART\r\n");
 	printf(COLOR_RESET);
 	STM32_TRACE(0, "STM32 TRACE 0\r\n");	
 	STM32_TRACE(1, "STM32 TRACE 1\r\n");
@@ -105,14 +104,15 @@ void printf_test(void)
 	/* loop */
 	printf("Please input:\r\n");
 	while (1){
-		if(is_getchar_status()){
-			get_char = fgetc(stdin);
-			printf("%02x - %c\r\n", get_char, get_char);
-			if(get_char == 0x03 ){ /* Ctrl + C */
-				break;
-			}
-		}
 		printf_stu();
+		get_char = fgetc(stdin);
+		if(get_char == -1){
+			continue;
+		}
+		printf("%02x - %c\r\n", get_char, get_char);
+		if(get_char == 0x03 ){ /* Ctrl + C */
+			break;
+		}
 	}
 }
 
@@ -124,6 +124,9 @@ void printf_test(void)
   */
 void i2c_ee_cpal_test(void)
 {
+	/* Print test info */
+	printf(COLOR_RED "\r\nIIC CPAL Example: read i2c eeprom via cpal lib" COLOR_RESET);
+
 	/*------------- Initialize sEE_DevStructure -------------*/
 	sEE_DevStructure.sEEAddress = EEPROM_ADDRESS;
 	sEE_DevStructure.sEEPageSize = EEPROM_PAGE_SIZE;
@@ -134,27 +137,27 @@ void i2c_ee_cpal_test(void)
 	sEE_Init(&sEE_DevStructure);
 
 	/* Write Data in EEPROM */
+	SysTick_delay_nMS(100);
 	sEE_WriteBuffer(&sEE_DevStructure, (uint8_t*)Tx1Buffer, EEPROM_WRITE_ADDR1, BUFFER1_SIZE);
 
 	/* Wail until communication is complete */
-	printf("\n");
+	printf(COLOR_GREEN "\r\nWait write done ..." COLOR_RESET);
 	while((sEE_GetEepromState(&sEE_DevStructure) != sEE_STATE_IDLE) && 
-	  	(sEE_GetEepromState(&sEE_DevStructure) != sEE_STATE_ERROR))
-	{ 
-		printf("\rWait write done ...");
-	}  
+	  	(sEE_GetEepromState(&sEE_DevStructure) != sEE_STATE_ERROR)){ 
+	}
 
 	/* Read Data from EEPROM */
+	SysTick_delay_nMS(100);
 	sEE_ReadBuffer(&sEE_DevStructure, Rx1Buffer, EEPROM_READ_ADDR1, BUFFER1_SIZE);
 
 	/* Wail until communication is complete */
-	printf("\n");
+	printf(COLOR_GREEN "\r\nWait read done ..." COLOR_RESET);
 	while((sEE_GetEepromState(&sEE_DevStructure) != sEE_STATE_IDLE) && 
-	  (sEE_GetEepromState(&sEE_DevStructure) != sEE_STATE_ERROR))
-	{
-		printf("\rWait read done ...");
+	  (sEE_GetEepromState(&sEE_DevStructure) != sEE_STATE_ERROR)){
 	}
-	printf("\r\nRx1Buffer: %s\r\n", Rx1Buffer);
+
+	printf(COLOR_GREEN "\r\nWr:<%s>\r\n" COLOR_RESET, Tx1Buffer);
+	printf(COLOR_GREEN "Rd:<%s>\r\n" COLOR_RESET, Rx1Buffer);
 }
 
 /******************************************************************************/
@@ -168,10 +171,11 @@ int main(void)
 	hardware_config();                                       /* Init hardware */
 	printf_init();                                             /* Init printf */
 
-	dma_mem_to_mem_test();
+	//dma_mem_to_mem_test();
+	i2c_ee_cpal_test();
 	printf_test();
-
-	printf(COLOR_GREEN"\r\nall done.\r\n"COLOR_RESET);
+	
+	printf(COLOR_GREEN "\r\nall done.\r\n" COLOR_RESET);
 	while(1){
 	}
 }
