@@ -22,8 +22,8 @@
 	#define PRINTF_VIA_INT                       1
 #endif
 #if (PRINTF_VIA_INT != 0)
-	#define GETCHAR_BUF_SIZE                     256
-	#define PUTCHAR_BUF_SIZE                     256
+	#define GETCHAR_BUF_SIZE                     512
+	#define PUTCHAR_BUF_SIZE                     512
 #endif
 
 /*

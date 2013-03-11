@@ -19,7 +19,7 @@
 
 /* Private typedef -----------------------------------------------------------*/
 /* Private define ------------------------------------------------------------*/
-#define ARRAYSIZE                                800
+#define ARRAYSIZE                                256
 
 /* Define EEPROM address, size and page size */
 #define EEPROM_ADDRESS                           0xA0
@@ -59,6 +59,9 @@ void dma_mem_to_mem_test(void)
 	uint32_t i;
 
 	/* initialize array */
+	printf(COLOR_RED);
+	printf("DMA Example: men to men");
+	printf(COLOR_RESET);
 	for(i=0; i<ARRAYSIZE; i++){
 		source[i]      = i;
 		destination[i] = 0;
@@ -71,6 +74,7 @@ void dma_mem_to_mem_test(void)
 	for(i=0; i<ARRAYSIZE; i++){
 		if(i%8 == 0){
 			printf("\r\n");
+			SysTick_delay_nMS(50);                          /* delay for send */
 		}
 		printf("%08x ", destination[i]);
 	}
@@ -84,6 +88,8 @@ void dma_mem_to_mem_test(void)
   */
 void printf_test(void)
 {
+	int get_char;
+
 	/* Print project info */
 	printf(COLOR_RED);
 	printf("\n\rUSART Printf Example: retarget the C library printf function to the USART\n\r");
@@ -100,7 +106,11 @@ void printf_test(void)
 	printf("Please input:\r\n");
 	while (1){
 		if(is_getchar_status()){
-			printf("%c\r\n", fgetc(stdin));
+			get_char = fgetc(stdin);
+			printf("%02x - %c\r\n", get_char, get_char);
+			if(get_char == 0x03 ){ /* Ctrl + C */
+				break;
+			}
 		}
 		printf_stu();
 	}
@@ -158,6 +168,7 @@ int main(void)
 	hardware_config();                                       /* Init hardware */
 	printf_init();                                             /* Init printf */
 
+	dma_mem_to_mem_test();
 	printf_test();
 
 	printf(COLOR_GREEN"\r\nall done.\r\n"COLOR_RESET);
