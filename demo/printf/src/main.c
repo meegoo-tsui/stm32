@@ -23,16 +23,9 @@
 
 /* Define EEPROM address, size and page size */
 #define EEPROM_ADDRESS                           0xA0
+#define EEPROM_SIZE                              256
 #define EEPROM_PAGE_SIZE                         8
-#define sEE_DevStructure                         sEE1_DevStructure 
-
-#define BUFFER1_SIZE                             (countof(Tx1Buffer)-1)
-#define BUFFER2_SIZE                             (countof(Tx2Buffer)-1)
-
-#define EEPROM_READ_ADDR1                        ((uint16_t)0x0010)
-#define EEPROM_WRITE_ADDR1                       ((uint16_t)0x0010)
-#define EEPROM_READ_ADDR2                        ((uint16_t)0x00FF)
-#define EEPROM_WRITE_ADDR2                       ((uint16_t)0x00FF)
+#define sEE_DevStructure                         sEE1_DevStructure
 
 /* Private macro -------------------------------------------------------------*/
 #define countof(a)                               (sizeof(a) / sizeof(*(a)))
@@ -40,12 +33,6 @@
 /* Private variables ---------------------------------------------------------*/
 uint32_t source[ARRAYSIZE];
 uint32_t destination[ARRAYSIZE];
-
-const uint8_t Tx1Buffer[] = "ABCDEFG";
-const uint8_t Tx2Buffer[] = "0123456";
-
-uint8_t Rx1Buffer[BUFFER1_SIZE] = {0};
-uint8_t Rx2Buffer[BUFFER2_SIZE] = {0};
 
 /* Private function prototypes -----------------------------------------------*/
 /* Private functions ---------------------------------------------------------*/
@@ -124,8 +111,13 @@ void printf_test(void)
   */
 void i2c_ee_cpal_test(void)
 {
+	int i, j;
+	uint8_t txd_buf[EEPROM_PAGE_SIZE] = {0};
+	uint8_t rxd_buf[EEPROM_SIZE] = {0};
+
 	/* Print test info */
-	printf(COLOR_RED "\r\nIIC CPAL Example: read i2c eeprom via cpal lib" COLOR_RESET);
+	printf(COLOR_RED "\r\nIIC CPAL Example: read i2c eeprom via cpal lib\r\n" COLOR_RESET);
+	SysTick_delay_nMS(100);
 
 	/*------------- Initialize sEE_DevStructure -------------*/
 	sEE_DevStructure.sEEAddress = EEPROM_ADDRESS;
@@ -135,29 +127,36 @@ void i2c_ee_cpal_test(void)
 	/*-------------- Initialize sEE peripheral -------------*/
 	sEE_StructInit(&sEE_DevStructure);
 	sEE_Init(&sEE_DevStructure);
-
-	/* Write Data in EEPROM */
 	SysTick_delay_nMS(100);
-	sEE_WriteBuffer(&sEE_DevStructure, (uint8_t*)Tx1Buffer, EEPROM_WRITE_ADDR1, BUFFER1_SIZE);
 
-	/* Wail until communication is complete */
-	printf(COLOR_GREEN "\r\nWait write done ..." COLOR_RESET);
-	while((sEE_GetEepromState(&sEE_DevStructure) != sEE_STATE_IDLE) && 
-	  	(sEE_GetEepromState(&sEE_DevStructure) != sEE_STATE_ERROR)){ 
+	/* Write chip data in EEPROM */
+	for(i=0; i<2; i++){
+		printf(COLOR_GREEN "\r\nPage: %02d\r\n" COLOR_RESET, (i + 1));
+		for(j=0; j<EEPROM_PAGE_SIZE; j++){
+			txd_buf[j] = j + i + 1;
+			printf("%02x ", txd_buf[j]);
+		}
+		printf("\r\n");
+
+		/* Write page Data in EEPROM */
+		sEE_WriteBuffer(&sEE_DevStructure, txd_buf, (i<<3), EEPROM_PAGE_SIZE);
+		/* Wail until communication is complete */
+		while((sEE_GetEepromState(&sEE_DevStructure) != sEE_STATE_IDLE) && 
+			(sEE_GetEepromState(&sEE_DevStructure) != sEE_STATE_ERROR)){ 
+		}
+		SysTick_delay_nMS(100);
 	}
 
-	/* Read Data from EEPROM */
+	/* Read chip data in EEPROM */
+	sEE_ReadBuffer(&sEE_DevStructure, rxd_buf, 0, EEPROM_PAGE_SIZE);
 	SysTick_delay_nMS(100);
-	sEE_ReadBuffer(&sEE_DevStructure, Rx1Buffer, EEPROM_READ_ADDR1, BUFFER1_SIZE);
-
-	/* Wail until communication is complete */
-	printf(COLOR_GREEN "\r\nWait read done ..." COLOR_RESET);
-	while((sEE_GetEepromState(&sEE_DevStructure) != sEE_STATE_IDLE) && 
-	  (sEE_GetEepromState(&sEE_DevStructure) != sEE_STATE_ERROR)){
+	for(i=0; i<EEPROM_SIZE; i++){
+		if(i%8 == 0){
+			printf("\r\n");
+		}
+		printf("%02x ", rxd_buf[i]);
 	}
-
-	printf(COLOR_GREEN "\r\nWr:<%s>\r\n" COLOR_RESET, Tx1Buffer);
-	printf(COLOR_GREEN "Rd:<%s>\r\n" COLOR_RESET, Rx1Buffer);
+	printf("\r\n");
 }
 
 /******************************************************************************/
