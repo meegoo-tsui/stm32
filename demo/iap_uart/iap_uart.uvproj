@@ -7,7 +7,7 @@
 
   <Targets>
     <Target>
-      <TargetName>stm32f10x printf</TargetName>
+      <TargetName>stm32f10x iap_uart</TargetName>
       <ToolsetNumber>0x4</ToolsetNumber>
       <ToolsetName>ARM-ADS</ToolsetName>
       <TargetOption>
@@ -44,7 +44,7 @@
             <InvalidFlash>1</InvalidFlash>
           </TargetStatus>
           <OutputDirectory>.\.out\</OutputDirectory>
-          <OutputName>printf</OutputName>
+          <OutputName>iap_uart</OutputName>
           <CreateExecutable>1</CreateExecutable>
           <CreateLib>0</CreateLib>
           <CreateHexFile>1</CreateHexFile>
@@ -346,9 +346,9 @@
             <uThumb>0</uThumb>
             <VariousControls>
               <MiscControls></MiscControls>
-              <Define>USE_STDPERIPH_DRIVER, USE_FULL_ASSERT, STM32F10X_MD, PRINTF_LEVEL=2, CPAL_DEBUG</Define>
+              <Define>USE_STM3210B_EVAL,USE_STDPERIPH_DRIVER, USE_FULL_ASSERT, STM32F10X_MD, PRINTF_LEVEL=2</Define>
               <Undefine></Undefine>
-              <IncludePath>..\..\sdk\CMSIS_V3.5.0\CoreSupport;..\..\sdk\CMSIS_V3.5.0\DeviceSupport\STM32F10x;..\..\sdk\STM32F10x_StdPeriph_Lib_V3.5.0\inc;..\..\sdk\STM32_I2C_CPAL_V1.1.0\inc;..\..\sdk\STM32_I2C_CPAL_V1.1.0\devices\stm32f10x;..\..\sdk\STM32F10x_App_Lib_V1.0.0\inc;.\inc</IncludePath>
+              <IncludePath>..\..\sdk\CMSIS_V3.5.0\CoreSupport;..\..\sdk\CMSIS_V3.5.0\DeviceSupport\STM32F10x;..\..\sdk\STM32F10x_StdPeriph_Lib_V3.5.0\inc;..\..\sdk\STM32F10x_Utilities_V3.5.0\STM32_EVAL;..\..\sdk\STM32_I2C_CPAL_V1.1.0\inc;..\..\sdk\STM32_I2C_CPAL_V1.1.0\devices\stm32f10x;..\..\sdk\STM32F10x_App_Lib_V1.0.0\inc;.\inc</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -725,94 +725,55 @@
               <FileName>stm32f10x_dma.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\sdk\STM32F10x_StdPeriph_Lib_V3.5.0\src\stm32f10x_dma.c</FilePath>
+              <FileOption>
+                <CommonProperty>
+                  <UseCPPCompiler>2</UseCPPCompiler>
+                  <RVCTCodeConst>0</RVCTCodeConst>
+                  <RVCTZI>0</RVCTZI>
+                  <RVCTOtherData>0</RVCTOtherData>
+                  <ModuleSelection>0</ModuleSelection>
+                  <IncludeInBuild>0</IncludeInBuild>
+                  <AlwaysBuild>2</AlwaysBuild>
+                  <GenerateAssemblyFile>2</GenerateAssemblyFile>
+                  <AssembleAssemblyFile>2</AssembleAssemblyFile>
+                  <PublicsOnly>2</PublicsOnly>
+                  <StopOnExitCode>11</StopOnExitCode>
+                  <CustomArgument></CustomArgument>
+                  <IncludeLibraryModules></IncludeLibraryModules>
+                </CommonProperty>
+                <FileArmAds>
+                  <Cads>
+                    <interw>2</interw>
+                    <Optim>0</Optim>
+                    <oTime>2</oTime>
+                    <SplitLS>2</SplitLS>
+                    <OneElfS>2</OneElfS>
+                    <Strict>2</Strict>
+                    <EnumInt>2</EnumInt>
+                    <PlainCh>2</PlainCh>
+                    <Ropi>2</Ropi>
+                    <Rwpi>2</Rwpi>
+                    <wLevel>0</wLevel>
+                    <uThumb>2</uThumb>
+                    <VariousControls>
+                      <MiscControls></MiscControls>
+                      <Define></Define>
+                      <Undefine></Undefine>
+                      <IncludePath></IncludePath>
+                    </VariousControls>
+                  </Cads>
+                </FileArmAds>
+              </FileOption>
             </File>
             <File>
               <FileName>stm32f10x_exti.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\sdk\STM32F10x_StdPeriph_Lib_V3.5.0\src\stm32f10x_exti.c</FilePath>
-              <FileOption>
-                <CommonProperty>
-                  <UseCPPCompiler>2</UseCPPCompiler>
-                  <RVCTCodeConst>0</RVCTCodeConst>
-                  <RVCTZI>0</RVCTZI>
-                  <RVCTOtherData>0</RVCTOtherData>
-                  <ModuleSelection>0</ModuleSelection>
-                  <IncludeInBuild>0</IncludeInBuild>
-                  <AlwaysBuild>2</AlwaysBuild>
-                  <GenerateAssemblyFile>2</GenerateAssemblyFile>
-                  <AssembleAssemblyFile>2</AssembleAssemblyFile>
-                  <PublicsOnly>2</PublicsOnly>
-                  <StopOnExitCode>11</StopOnExitCode>
-                  <CustomArgument></CustomArgument>
-                  <IncludeLibraryModules></IncludeLibraryModules>
-                </CommonProperty>
-                <FileArmAds>
-                  <Cads>
-                    <interw>2</interw>
-                    <Optim>0</Optim>
-                    <oTime>2</oTime>
-                    <SplitLS>2</SplitLS>
-                    <OneElfS>2</OneElfS>
-                    <Strict>2</Strict>
-                    <EnumInt>2</EnumInt>
-                    <PlainCh>2</PlainCh>
-                    <Ropi>2</Ropi>
-                    <Rwpi>2</Rwpi>
-                    <wLevel>0</wLevel>
-                    <uThumb>2</uThumb>
-                    <VariousControls>
-                      <MiscControls></MiscControls>
-                      <Define></Define>
-                      <Undefine></Undefine>
-                      <IncludePath></IncludePath>
-                    </VariousControls>
-                  </Cads>
-                </FileArmAds>
-              </FileOption>
             </File>
             <File>
               <FileName>stm32f10x_flash.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\sdk\STM32F10x_StdPeriph_Lib_V3.5.0\src\stm32f10x_flash.c</FilePath>
-              <FileOption>
-                <CommonProperty>
-                  <UseCPPCompiler>2</UseCPPCompiler>
-                  <RVCTCodeConst>0</RVCTCodeConst>
-                  <RVCTZI>0</RVCTZI>
-                  <RVCTOtherData>0</RVCTOtherData>
-                  <ModuleSelection>0</ModuleSelection>
-                  <IncludeInBuild>0</IncludeInBuild>
-                  <AlwaysBuild>2</AlwaysBuild>
-                  <GenerateAssemblyFile>2</GenerateAssemblyFile>
-                  <AssembleAssemblyFile>2</AssembleAssemblyFile>
-                  <PublicsOnly>2</PublicsOnly>
-                  <StopOnExitCode>11</StopOnExitCode>
-                  <CustomArgument></CustomArgument>
-                  <IncludeLibraryModules></IncludeLibraryModules>
-                </CommonProperty>
-                <FileArmAds>
-                  <Cads>
-                    <interw>2</interw>
-                    <Optim>0</Optim>
-                    <oTime>2</oTime>
-                    <SplitLS>2</SplitLS>
-                    <OneElfS>2</OneElfS>
-                    <Strict>2</Strict>
-                    <EnumInt>2</EnumInt>
-                    <PlainCh>2</PlainCh>
-                    <Ropi>2</Ropi>
-                    <Rwpi>2</Rwpi>
-                    <wLevel>0</wLevel>
-                    <uThumb>2</uThumb>
-                    <VariousControls>
-                      <MiscControls></MiscControls>
-                      <Define></Define>
-                      <Undefine></Undefine>
-                      <IncludePath></IncludePath>
-                    </VariousControls>
-                  </Cads>
-                </FileArmAds>
-              </FileOption>
             </File>
             <File>
               <FileName>stm32f10x_fsmc.c</FileName>
@@ -857,6 +818,11 @@
                   </Cads>
                 </FileArmAds>
               </FileOption>
+            </File>
+            <File>
+              <FileName>stm32f10x_gpio.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\sdk\STM32F10x_StdPeriph_Lib_V3.5.0\src\stm32f10x_gpio.c</FilePath>
             </File>
             <File>
               <FileName>stm32f10x_i2c.c</FileName>
@@ -1048,45 +1014,6 @@
               <FileName>stm32f10x_spi.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\sdk\STM32F10x_StdPeriph_Lib_V3.5.0\src\stm32f10x_spi.c</FilePath>
-              <FileOption>
-                <CommonProperty>
-                  <UseCPPCompiler>2</UseCPPCompiler>
-                  <RVCTCodeConst>0</RVCTCodeConst>
-                  <RVCTZI>0</RVCTZI>
-                  <RVCTOtherData>0</RVCTOtherData>
-                  <ModuleSelection>0</ModuleSelection>
-                  <IncludeInBuild>0</IncludeInBuild>
-                  <AlwaysBuild>2</AlwaysBuild>
-                  <GenerateAssemblyFile>2</GenerateAssemblyFile>
-                  <AssembleAssemblyFile>2</AssembleAssemblyFile>
-                  <PublicsOnly>2</PublicsOnly>
-                  <StopOnExitCode>11</StopOnExitCode>
-                  <CustomArgument></CustomArgument>
-                  <IncludeLibraryModules></IncludeLibraryModules>
-                </CommonProperty>
-                <FileArmAds>
-                  <Cads>
-                    <interw>2</interw>
-                    <Optim>0</Optim>
-                    <oTime>2</oTime>
-                    <SplitLS>2</SplitLS>
-                    <OneElfS>2</OneElfS>
-                    <Strict>2</Strict>
-                    <EnumInt>2</EnumInt>
-                    <PlainCh>2</PlainCh>
-                    <Ropi>2</Ropi>
-                    <Rwpi>2</Rwpi>
-                    <wLevel>0</wLevel>
-                    <uThumb>2</uThumb>
-                    <VariousControls>
-                      <MiscControls></MiscControls>
-                      <Define></Define>
-                      <Undefine></Undefine>
-                      <IncludePath></IncludePath>
-                    </VariousControls>
-                  </Cads>
-                </FileArmAds>
-              </FileOption>
             </File>
             <File>
               <FileName>stm32f10x_tim.c</FileName>
@@ -1181,46 +1108,31 @@
                 </FileArmAds>
               </FileOption>
             </File>
-            <File>
-              <FileName>stm32f10x_gpio.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\sdk\STM32F10x_StdPeriph_Lib_V3.5.0\src\stm32f10x_gpio.c</FilePath>
-            </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>STM32_I2C_CPAL_V1.1.0</GroupName>
+          <GroupName>STM32F10x_Utilities_V3.5.0</GroupName>
           <Files>
             <File>
-              <FileName>cpal_i2c_hal_stm32f10x.c</FileName>
+              <FileName>stm32_eval.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\sdk\STM32_I2C_CPAL_V1.1.0\devices\stm32f10x\cpal_i2c_hal_stm32f10x.c</FilePath>
-            </File>
-            <File>
-              <FileName>cpal_hal.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\sdk\STM32_I2C_CPAL_V1.1.0\src\cpal_hal.c</FilePath>
-            </File>
-            <File>
-              <FileName>cpal_i2c.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\sdk\STM32_I2C_CPAL_V1.1.0\src\cpal_i2c.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>STM32F10x_App_Lib_V1.0.0</GroupName>
-          <Files>
-            <File>
-              <FileName>printf.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\sdk\STM32F10x_App_Lib_V1.0.0\src\printf.c</FilePath>
+              <FilePath>..\..\sdk\STM32F10x_Utilities_V3.5.0\STM32_EVAL\stm32_eval.c</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
           <GroupName>User</GroupName>
           <Files>
+            <File>
+              <FileName>common.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\src\common.c</FilePath>
+            </File>
+            <File>
+              <FileName>download.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\src\download.c</FilePath>
+            </File>
             <File>
               <FileName>main.c</FileName>
               <FileType>1</FileType>
@@ -1232,19 +1144,14 @@
               <FilePath>.\src\stm32f10x_it.c</FilePath>
             </File>
             <File>
-              <FileName>hw_config.c</FileName>
+              <FileName>upload.c</FileName>
               <FileType>1</FileType>
-              <FilePath>.\src\hw_config.c</FilePath>
+              <FilePath>.\src\upload.c</FilePath>
             </File>
             <File>
-              <FileName>cpal_usercallback.c</FileName>
+              <FileName>ymodem.c</FileName>
               <FileType>1</FileType>
-              <FilePath>.\src\cpal_usercallback.c</FilePath>
-            </File>
-            <File>
-              <FileName>stm32_i2c_ee_cpal.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\src\stm32_i2c_ee_cpal.c</FilePath>
+              <FilePath>.\src\ymodem.c</FilePath>
             </File>
           </Files>
         </Group>
