@@ -26,8 +26,7 @@
 #include "stdio.h"
 #include "string.h"
 #include "stm32f10x.h"
-#include "ymodem.h"
-#include "stm32_eval.h" 
+#include "ymodem.h" 
 
 /* Exported types ------------------------------------------------------------*/
 typedef  void (*pFunction)(void);

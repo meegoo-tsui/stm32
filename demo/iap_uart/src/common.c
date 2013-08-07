@@ -196,9 +196,9 @@ uint32_t GetIntegerInput(int32_t * num)
 uint32_t SerialKeyPressed(uint8_t *key)
 {
 
-  if ( USART_GetFlagStatus(EVAL_COM1, USART_FLAG_RXNE) != RESET)
+  if ( USART_GetFlagStatus(USART1, USART_FLAG_RXNE) != RESET)
   {
-    *key = (uint8_t)EVAL_COM1->DR;
+    *key = (uint8_t)USART1->DR;
     return 1;
   }
   else
@@ -232,8 +232,8 @@ uint8_t GetKey(void)
   */
 void SerialPutChar(uint8_t c)
 {
-  USART_SendData(EVAL_COM1, c);
-  while (USART_GetFlagStatus(EVAL_COM1, USART_FLAG_TXE) == RESET)
+  USART_SendData(USART1, c);
+  while (USART_GetFlagStatus(USART1, USART_FLAG_TXE) == RESET)
   {
   }
 }

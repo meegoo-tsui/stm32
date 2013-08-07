@@ -44,14 +44,22 @@ static void IAP_Init(void);
   */
 int main(void)
 {
+  GPIO_InitTypeDef  GPIO_InitStructure;
+
   /* Flash unlock */
   FLASH_Unlock();
 
-  /* Initialize Key Button mounted on STM3210X-EVAL board */       
-  STM_EVAL_PBInit(BUTTON_KEY, BUTTON_MODE_GPIO);   
+  /* Judge STM3210b-LK1 Key2 - PD3 */
+  /* Enable GPIOD clock */
+  RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOD, ENABLE);
+  
+  /* Configure PD.00 pin as input floating */
+  GPIO_InitStructure.GPIO_Pin = GPIO_Pin_3;
+  GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IN_FLOATING;
+  GPIO_Init(GPIOD, &GPIO_InitStructure);
 
   /* Test if Key push-button on STM3210X-EVAL Board is pressed */
-  if (STM_EVAL_PBGetState(BUTTON_KEY)  == 0x00)
+  if (GPIO_ReadInputDataBit(GPIOD, GPIO_Pin_3) == 0x00)
   { 
     /* If Key is pressed */
     /* Execute the IAP driver in order to re-program the Flash */
@@ -92,7 +100,22 @@ int main(void)
   */
 void IAP_Init(void)
 {
- USART_InitTypeDef USART_InitStructure;
+  USART_InitTypeDef USART_InitStructure;
+  GPIO_InitTypeDef  GPIO_InitStructure;
+
+  /* Enable GPIOA and USART1 clock */
+  RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOA | RCC_APB2Periph_USART1, ENABLE);
+
+  /* Configure USART1 Rx (PA.10) as input floating */
+  GPIO_InitStructure.GPIO_Pin = GPIO_Pin_10;
+  GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IN_FLOATING;
+  GPIO_Init(GPIOA, &GPIO_InitStructure);
+
+  /* Configure USART1 Tx (PA.09) as alternate function push-pull */
+  GPIO_InitStructure.GPIO_Pin = GPIO_Pin_9;
+  GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
+  GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AF_PP;
+  GPIO_Init(GPIOA, &GPIO_InitStructure);
 
   /* USART resources configuration (Clock, GPIO pins and USART registers) ----*/
   /* USART configured as follow:
@@ -110,7 +133,12 @@ void IAP_Init(void)
   USART_InitStructure.USART_HardwareFlowControl = USART_HardwareFlowControl_None;
   USART_InitStructure.USART_Mode = USART_Mode_Rx | USART_Mode_Tx;
 
-  STM_EVAL_COMInit(COM1, &USART_InitStructure);  
+  /* Configure the USART1 */
+  USART_Init(USART1, &USART_InitStructure);
+  /* Enable the USARTx */
+  USART_Cmd(USART1, ENABLE);
+  /* Clear flag for 1st byte */
+  USART_GetFlagStatus(USART1, USART_FLAG_TC);
 }
 
 #ifdef USE_FULL_ASSERT
