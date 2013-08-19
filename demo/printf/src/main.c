@@ -167,6 +167,7 @@ void i2c_ee_cpal_test(void)
   */
 int main(void)
 {
+	NVIC_SetVectorTable(NVIC_VectTab_FLASH, 0x3000);    /* re-locate vect tab */
 	hardware_config();                                       /* Init hardware */
 	printf_init();                                             /* Init printf */
 
